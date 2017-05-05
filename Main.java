@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,7 +23,12 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setTitle("Swimmy Duck");
-
+		
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+		if(key.getCode()==KeyCode.SPACE) {
+			Yspeed = -15;
+		}
+		});
 		Circle player = new Circle(15, 15, 15, Color.ORANGE);
 		player.centerXProperty().bind(gameLayout.widthProperty().divide(3));
 		player.setCenterY(Ypos);
