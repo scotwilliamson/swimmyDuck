@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,11 +13,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class Main extends Application {
-	private static int Ypos = 300;
-	private static int Yspeed = 0;
-	private static int[] rectX = { 800, 1000, 1200, 1400, 1600 };
-	private static double[] rectHeight = {Math.random() * 400 + 50, Math.random() * 400 + 50, Math.random() * 400 + 50,
+	public static int Ypos = 300;
+	public static int Xpos = 200;
+	public static int Yspeed = 0;
+	public static int[] rectX = { 800, 1000, 1200, 1400, 1600 };
+	public static double[] rectHeight = {Math.random() * 400 + 50, Math.random() * 400 + 50, Math.random() * 400 + 50,
 			Math.random() * 400 + 50, Math.random() * 400 + 50 };
+	public static boolean isAlive = true;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -28,12 +29,24 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setTitle("Swimmy Duck");
-
+		
 		Rectangle a = new Rectangle();
 		Rectangle b = new Rectangle();
 		Rectangle c = new Rectangle();
 		Rectangle d = new Rectangle();
 		Rectangle e = new Rectangle();
+		
+		Rectangle hitbox = new Rectangle(30,30,Xpos - 15,Ypos - 15);
+		
+		/*Rectangle rect = new Rectangle(10,10,10,10);
+		ArrayList<Rectangle> spaces = new ArrayList<Rectangle>();
+		for(int i = 0; i < rectX.length; i++){
+			spaces.add(rectangle);
+			spaces.get(i).setHeight(65);
+			spaces.get(i).setX(rectX[i]);
+			spaces.get(i).setY(rectHeight[i] + 30);
+			spaces.get(i).setWidth(50);
+		}*/
 		
 		ArrayList<Rectangle> upperPoles = new ArrayList<Rectangle>();
 		upperPoles.add(a);
@@ -64,14 +77,14 @@ public class Main extends Application {
 		for(int k = 0; k < lowerPoles.size(); k++){
 			lowerPoles.get(k).setWidth(50);
 			lowerPoles.get(k).setHeight(600);
-			lowerPoles.get(k).setY((int)rectHeight[k] + 100);
+			lowerPoles.get(k).setY((int)rectHeight[k] + 125);
 			lowerPoles.get(k).setFill(Color.FORESTGREEN);
 			gameLayout.getChildren().add(lowerPoles.get(k));
 		}
 
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
 			if (key.getCode() == KeyCode.SPACE) {
-				Yspeed = -15;
+				Yspeed = -11;
 			}
 		});
 		Circle player = new Circle(15, 15, 15, Color.ORANGE);
@@ -82,12 +95,16 @@ public class Main extends Application {
 			public void handle(long currentNanoTime) {
 				updatePlayer();
 				updateRectangles();
+				Xpos = (int) gameLayout.getWidth()/3;
 				for (int i = 0; i < upperPoles.size(); i++) {
 					upperPoles.get(i).setX(rectX[i]);
 					upperPoles.get(i).setHeight(rectHeight[i]);
 					lowerPoles.get(i).setX(rectX[i]);
 					lowerPoles.get(i).setHeight(600);
-					lowerPoles.get(i).setY((int)rectHeight[i] + 100);
+					lowerPoles.get(i).setY((int)rectHeight[i] + 125);
+					if(hitbox.contains(upperPoles.get(i)) || hitbox.contains(lowerPoles.get(i))){
+						
+					}
 				}   
 				player.setCenterY(Ypos);
 			}
@@ -110,7 +127,9 @@ public class Main extends Application {
 			}
 		}
 	}
-
+	public static void collisionDetection(){
+		
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}
