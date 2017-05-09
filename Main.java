@@ -63,8 +63,8 @@ public class Main extends Application {
 		
 		for(int k = 0; k < lowerPoles.size(); k++){
 			lowerPoles.get(k).setWidth(50);
-			lowerPoles.get(k).setHeight(600 - ((int)rectHeight[k] + 100));
-			lowerPoles.get(k).setY(lowerPoles.get(k).getHeight());
+			lowerPoles.get(k).setHeight(600);
+			lowerPoles.get(k).setY((int)rectHeight[k] + 100);
 			lowerPoles.get(k).setFill(Color.FORESTGREEN);
 			gameLayout.getChildren().add(lowerPoles.get(k));
 		}
@@ -86,9 +86,9 @@ public class Main extends Application {
 					upperPoles.get(i).setX(rectX[i]);
 					upperPoles.get(i).setHeight(rectHeight[i]);
 					lowerPoles.get(i).setX(rectX[i]);
-					lowerPoles.get(i).setHeight(500 - (int)rectHeight[i]);
-					lowerPoles.get(i).setY(500 - (int)rectHeight[i]);
-				}
+					lowerPoles.get(i).setHeight(600);
+					lowerPoles.get(i).setY((int)rectHeight[i] + 100);
+				}   
 				player.setCenterY(Ypos);
 			}
 		}.start();
