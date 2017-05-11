@@ -57,8 +57,7 @@ public class BackgroundLogic extends Main {
 		for (int i = 0; i < upperPoles.size(); i++) {
 			if (hitbox.getX() + hitbox.getWidth() > lowerPoles.get(i).getX()
 					&& hitbox.getX() < lowerPoles.get(i).getX() + 50) {
-				if ((hitbox.getY() < upperPoles.get(i).getHeight() || hitbox.getY() + 30 > lowerPoles.get(i).getY())
-						&& isAlive == true) {
+				if (hitbox.getY() < upperPoles.get(i).getHeight() || hitbox.getY() + 30 > lowerPoles.get(i).getY()) {
 					isAlive = false;
 				}
 			}

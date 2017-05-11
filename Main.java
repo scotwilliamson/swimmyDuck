@@ -23,8 +23,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		Pane gameLayout = new Pane();
-		Scene scene = new Scene(gameLayout, 600, 600);
+		Pane root = new Pane();
+		Scene scene = new Scene(root, 600, 600);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -57,19 +57,16 @@ public class Main extends Application {
 		lowerPoles.add(l);
 		lowerPoles.add(j);
 		
-		Rectangle hitbox = new Rectangle(Xpos - 15, Ypos - 15, 30, 30);
-		gameLayout.getChildren().add(hitbox);
-		
 		for (int i = 0; i < upperPoles.size(); i++) {
 			upperPoles.get(i).setWidth(50);
 			upperPoles.get(i).setHeight((int)rectHeight[i]);
 			upperPoles.get(i).setFill(Color.FORESTGREEN);
-			gameLayout.getChildren().add(upperPoles.get(i));
+			root.getChildren().add(upperPoles.get(i));
 			lowerPoles.get(i).setWidth(50);
 			lowerPoles.get(i).setHeight(600);
 			lowerPoles.get(i).setY((int)rectHeight[i] + 150);
 			lowerPoles.get(i).setFill(Color.FORESTGREEN);
-			gameLayout.getChildren().add(lowerPoles.get(i));
+			root.getChildren().add(lowerPoles.get(i));
 		}
 
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
@@ -78,15 +75,15 @@ public class Main extends Application {
 			}
 		});
 		Circle player = new Circle(15, 15, 15, Color.ORANGE);
-		player.centerXProperty().bind(gameLayout.widthProperty().divide(3));
+		player.centerXProperty().bind(root.widthProperty().divide(3));
 		player.setCenterY(Ypos);
-		gameLayout.getChildren().add(player);
+		root.getChildren().add(player);
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
 				BackgroundLogic.logicUpdate();
-				updatePlayer();
+				updateValues();
 				updateRectangles();
-				Xpos = (int) gameLayout.getWidth()/3;
+				Xpos = (int) root.getWidth()/3;
 				for (int i = 0; i < upperPoles.size(); i++) {
 					upperPoles.get(i).setX(rectX[i]);
 					upperPoles.get(i).setHeight(rectHeight[i]);
@@ -98,13 +95,11 @@ public class Main extends Application {
 				if(BackgroundLogic.collisionDetection() == false){
 					System.out.println("The Player Has Died");
 				}
-				hitbox.setX(Xpos - 15);
-				hitbox.setY(Ypos - 15);
 			}
 		}.start();
 	}
 
-	public static void updatePlayer() {
+	public static void updateValues() {
 		Ypos += Yspeed;
 		if (Yspeed < 6) {
 			Yspeed += 1;
