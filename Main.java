@@ -30,7 +30,7 @@ public class Main extends Application {
 		primaryStage.show();
 		primaryStage.setTitle("Swimmy Duck");
 		
-		GameObject.create();
+		BackgroundLogic.create();
 		
 		Rectangle a = new Rectangle();
 		Rectangle b = new Rectangle();
@@ -57,19 +57,19 @@ public class Main extends Application {
 		lowerPoles.add(l);
 		lowerPoles.add(j);
 		
+		Rectangle hitbox = new Rectangle(Xpos - 15, Ypos - 15, 30, 30);
+		gameLayout.getChildren().add(hitbox);
+		
 		for (int i = 0; i < upperPoles.size(); i++) {
 			upperPoles.get(i).setWidth(50);
 			upperPoles.get(i).setHeight((int)rectHeight[i]);
 			upperPoles.get(i).setFill(Color.FORESTGREEN);
 			gameLayout.getChildren().add(upperPoles.get(i));
-		}
-		
-		for(int k = 0; k < lowerPoles.size(); k++){
-			lowerPoles.get(k).setWidth(50);
-			lowerPoles.get(k).setHeight(600);
-			lowerPoles.get(k).setY((int)rectHeight[k] + 125);
-			lowerPoles.get(k).setFill(Color.FORESTGREEN);
-			gameLayout.getChildren().add(lowerPoles.get(k));
+			lowerPoles.get(i).setWidth(50);
+			lowerPoles.get(i).setHeight(600);
+			lowerPoles.get(i).setY((int)rectHeight[i] + 150);
+			lowerPoles.get(i).setFill(Color.FORESTGREEN);
+			gameLayout.getChildren().add(lowerPoles.get(i));
 		}
 
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
@@ -83,7 +83,7 @@ public class Main extends Application {
 		gameLayout.getChildren().add(player);
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
-				GameObject.logicUpdate();
+				BackgroundLogic.logicUpdate();
 				updatePlayer();
 				updateRectangles();
 				Xpos = (int) gameLayout.getWidth()/3;
@@ -92,9 +92,14 @@ public class Main extends Application {
 					upperPoles.get(i).setHeight(rectHeight[i]);
 					lowerPoles.get(i).setX(rectX[i]);
 					lowerPoles.get(i).setHeight(600);
-					lowerPoles.get(i).setY((int)rectHeight[i] + 125);
+					lowerPoles.get(i).setY((int)rectHeight[i] + 150);
 				}   
 				player.setCenterY(Ypos);
+				if(BackgroundLogic.collisionDetection() == false){
+					System.out.println("The Player Has Died");
+				}
+				hitbox.setX(Xpos - 15);
+				hitbox.setY(Ypos - 15);
 			}
 		}.start();
 	}
@@ -115,9 +120,7 @@ public class Main extends Application {
 			}
 		}
 	}
-	public static void collisionDetection(){
-		
-	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
