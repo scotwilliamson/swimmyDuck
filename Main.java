@@ -30,23 +30,13 @@ public class Main extends Application {
 		primaryStage.show();
 		primaryStage.setTitle("Swimmy Duck");
 		
+		GameObject.create();
+		
 		Rectangle a = new Rectangle();
 		Rectangle b = new Rectangle();
 		Rectangle c = new Rectangle();
 		Rectangle d = new Rectangle();
 		Rectangle e = new Rectangle();
-		
-		Rectangle hitbox = new Rectangle(30,30,Xpos - 15,Ypos - 15);
-		
-		/*Rectangle rect = new Rectangle(10,10,10,10);
-		ArrayList<Rectangle> spaces = new ArrayList<Rectangle>();
-		for(int i = 0; i < rectX.length; i++){
-			spaces.add(rectangle);
-			spaces.get(i).setHeight(65);
-			spaces.get(i).setX(rectX[i]);
-			spaces.get(i).setY(rectHeight[i] + 30);
-			spaces.get(i).setWidth(50);
-		}*/
 		
 		ArrayList<Rectangle> upperPoles = new ArrayList<Rectangle>();
 		upperPoles.add(a);
@@ -93,6 +83,7 @@ public class Main extends Application {
 		gameLayout.getChildren().add(player);
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
+				GameObject.logicUpdate();
 				updatePlayer();
 				updateRectangles();
 				Xpos = (int) gameLayout.getWidth()/3;
@@ -102,9 +93,6 @@ public class Main extends Application {
 					lowerPoles.get(i).setX(rectX[i]);
 					lowerPoles.get(i).setHeight(600);
 					lowerPoles.get(i).setY((int)rectHeight[i] + 125);
-					if(hitbox.contains(upperPoles.get(i)) || hitbox.contains(lowerPoles.get(i))){
-						
-					}
 				}   
 				player.setCenterY(Ypos);
 			}
